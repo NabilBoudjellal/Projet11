@@ -9,6 +9,7 @@ public with sharing class TaskCreatorBatch implements Database.Batchable<sObject
     public void execute(Database.BatchableContext bc, List<Account> scope){
         List<Order> orderList = [select accountid from order];
         List<Task> taskList = [select WhatId from task];
+        List<Task> taskListToUpdate = new List<Task>();
 		for (Account account : scope) {
 
             Integer countOrder = 0;
@@ -26,9 +27,10 @@ public with sharing class TaskCreatorBatch implements Database.Batchable<sObject
                 }
             }
             if(countOrder == 0 && countTask == 0){
-                TaskOperation.createTask(account.id);
+                taskListToUpdate.add(TaskOperation.createTask(account.id));
             }
         }
+        insert taskListToUpdate;
     }
     public void finish(Database.BatchableContext bc){
     }

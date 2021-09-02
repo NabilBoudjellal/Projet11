@@ -5,7 +5,9 @@ trigger ActivateActiveCheckboxTrigger on Order (after insert) {
     for(Order o: Trigger.new){
         accountsIds.add(o.AccountId);
     }
+    List<Account> acountListe = new List<Account>();
     for(Id ids:accountsIds){
-        UpdateActiveField.activateCheckbox(ids);
+        acountListe.addall(UpdateActiveField.activateCheckbox(ids));
     }
+    update acountListe;
 }

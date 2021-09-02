@@ -10,7 +10,7 @@ public with sharing class TaskOperation {
      * RecurrenceInterval = 5 
      */ 
 
-    public static void createTask(Id accountId) {
+    public static Task createTask(Id accountId) {
 
         Task task = new Task( subject = 'Call',
                               status = 'Nouvelle',
@@ -20,7 +20,7 @@ public with sharing class TaskOperation {
                               RecurrenceRegeneratedType = 'RecurrenceRegenerateAfterDueDate',
                               RecurrenceInterval = 5 );
 
-        insert task;
+        return task;
 
     }
             /** Pour la mise en place du rappel automatique la tache doit avoir une activitydate

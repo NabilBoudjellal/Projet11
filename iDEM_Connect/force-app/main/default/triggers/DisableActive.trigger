@@ -10,9 +10,13 @@ trigger DisableActive on order (after delete) {
     }
 
     List<Order> listOrders = [select AccountId, id, shippingcity from order where accountid in:accountsIds];
+
+    List<Account> accountList = new List<Account>();
+
     for(Id ide:accountsIds){
         if(UpdateActiveField.checkNumbOrders(ide) == 0){
-            UpdateActiveField.disableActive(ide);
+            accountList.add(UpdateActiveField.disableActive(ide));
         }
     }
+    update accountList;
 }
